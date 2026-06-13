@@ -1959,3 +1959,373 @@ body.light .zopa-range-bar-track {
     background: transparent;
   }
 }
+
+/* ── Custom section styles for reflections & growth ── */
+.prose-subheading {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-top: 2.2rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.45s ease;
+}
+.prose-subheading::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--em-color);
+  border-radius: 50%;
+}
+
+
+
+@media (max-width: 768px) {
+  .prose-subheading {
+    font-size: 18px;
+    margin-top: 1.8rem;
+  }
+}
+
+/* ── Reflections Timeline Flow ── */
+.reflection-timeline {
+  position: relative;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding-left: 0.5rem;
+}
+
+/* Vertical line */
+.reflection-timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px; /* Align with center of dot */
+  top: 10px;
+  bottom: 10px;
+  width: 1.5px;
+  background: var(--em-color);
+  opacity: 0.35;
+  transition: background 0.45s ease;
+}
+
+.reflection-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.reflection-timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background: var(--bg); /* Blocks the vertical line behind the dot */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 5px; /* Align with first line of text */
+  position: relative;
+  z-index: 2;
+  transition: background 0.45s ease, border-color 0.45s ease;
+}
+
+.reflection-timeline-dot .dot-inner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Colors matching screenshot */
+.reflection-timeline-dot.dot-purple {
+  color: var(--em-color);
+}
+
+.reflection-timeline-dot.dot-gold {
+  color: #EF9F27;
+}
+
+body.light .reflection-timeline-dot.dot-gold {
+  color: #D4791E; /* slightly darker gold for readability in light mode */
+}
+
+.reflection-timeline-content {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-primary);
+  opacity: 0.82;
+  transition: color 0.45s ease;
+}
+
+.reflection-timeline-content strong {
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: color 0.45s ease;
+}
+
+/* ── Header Topbar Flex Adjustments ── */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ── Menu Toggle Button ── */
+.nav-menu-btn {
+  background: var(--toggle-btn-bg);
+  border: 0.5px solid var(--toggle-btn-bd);
+  color: var(--toggle-btn-clr);
+  padding: 7px 15px;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-btn-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--em-color);
+  border-radius: 50%;
+  transition: transform 0.25s ease;
+}
+
+.nav-menu-btn:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  background: rgba(83, 74, 183, 0.08);
+}
+
+.nav-menu-btn:hover .menu-btn-dot {
+  transform: scale(1.5);
+}
+
+/* ── Circular Menu Scale Variables ── */
+:root {
+  --menu-scale: 1;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --menu-scale: 0.65;
+  }
+}
+
+@media (max-height: 640px) and (min-width: 640px) {
+  :root {
+    --menu-scale: 0.75;
+  }
+}
+
+/* ── Circular Menu Overlay (Thonik-inspired) ── */
+.circular-menu-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 10, 15, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+body.light .circular-menu-overlay {
+  background: rgba(240, 238, 234, 0.72);
+}
+
+.circular-menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-circle-container {
+  position: relative;
+  width: calc(540px * var(--menu-scale));
+  height: calc(540px * var(--menu-scale));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Base style for concentric rings */
+.menu-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  transition: 
+    transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    opacity 0.65s ease, 
+    background 0.25s ease,
+    color 0.25s ease, 
+    border-color 0.25s ease,
+    filter 0.25s ease, 
+    box-shadow 0.25s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+}
+
+body.light .menu-ring {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Scale up and fade in when overlay is active */
+.circular-menu-overlay.active .menu-ring {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* Stagger ring expansions */
+.circular-menu-overlay.active .ring-1 { transition-delay: 0.04s; }
+.circular-menu-overlay.active .ring-2 { transition-delay: 0.08s; }
+.circular-menu-overlay.active .ring-3 { transition-delay: 0.12s; }
+.circular-menu-overlay.active .ring-4 { transition-delay: 0.16s; }
+.circular-menu-overlay.active .ring-5 { transition-delay: 0.2s; }
+
+/* Concentric ring sizing & colors (Thonik alternating contrast) */
+.ring-5 {
+  width: calc(540px * var(--menu-scale));
+  height: calc(540px * var(--menu-scale));
+  background: #ffffff;
+  color: #1a1a2e;
+  border: 1px solid rgba(83, 74, 183, 0.15);
+  z-index: 10;
+}
+
+.ring-4 {
+  width: calc(440px * var(--menu-scale));
+  height: calc(440px * var(--menu-scale));
+  background: #121214;
+  color: #ffffff;
+  border: 1px solid rgba(127, 119, 221, 0.1);
+  z-index: 11;
+}
+
+.ring-3 {
+  width: calc(340px * var(--menu-scale));
+  height: calc(340px * var(--menu-scale));
+  background: #ffffff;
+  color: #1a1a2e;
+  border: 1px solid rgba(83, 74, 183, 0.15);
+  z-index: 12;
+}
+
+.ring-2 {
+  width: calc(240px * var(--menu-scale));
+  height: calc(240px * var(--menu-scale));
+  background: #121214;
+  color: #ffffff;
+  border: 1px solid rgba(127, 119, 221, 0.1);
+  z-index: 13;
+}
+
+.ring-1 {
+  width: calc(140px * var(--menu-scale));
+  height: calc(140px * var(--menu-scale));
+  background: #ffffff;
+  color: #1a1a2e;
+  border: 1px solid rgba(83, 74, 183, 0.15);
+  z-index: 14;
+}
+
+/* Center Close button */
+.menu-center-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  width: calc(60px * var(--menu-scale));
+  height: calc(60px * var(--menu-scale));
+  border-radius: 50%;
+  background: #121214;
+  border: none;
+  color: #ffffff;
+  z-index: 15;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(18px * var(--menu-scale));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transition: 
+    transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    opacity 0.65s ease, 
+    background 0.25s ease, 
+    color 0.25s ease;
+}
+
+.circular-menu-overlay.active .menu-center-btn {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition-delay: 0.24s;
+}
+
+/* Labels positioned at top centers of bands */
+.ring-label {
+  position: absolute;
+  top: calc(12px * var(--menu-scale));
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: calc(10.5px * var(--menu-scale));
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  pointer-events: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+
+/* Hover effects (editorial purple highlight) */
+.menu-ring:hover {
+  filter: brightness(0.96);
+  box-shadow: 0 12px 48px rgba(83, 74, 183, 0.25);
+}
+
+body.light .menu-ring:hover {
+  filter: brightness(0.98);
+  box-shadow: 0 10px 36px rgba(83, 74, 183, 0.15);
+}
+
+.ring-5:hover { background: var(--em-color); color: #ffffff; border-color: var(--em-color); }
+.ring-4:hover { background: #7F77DD; color: #ffffff; border-color: #7F77DD; }
+.ring-3:hover { background: var(--em-color); color: #ffffff; border-color: var(--em-color); }
+.ring-2:hover { background: #7F77DD; color: #ffffff; border-color: #7F77DD; }
+.ring-1:hover { background: var(--em-color); color: #ffffff; border-color: var(--em-color); }
+
+.menu-center-btn:hover {
+  background: var(--em-color);
+  color: #ffffff;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+
+
+
+

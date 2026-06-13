@@ -491,11 +491,13 @@ let cachedTargets   = null;
 
 function cacheTimelineTargets() {
   const nodes = document.querySelectorAll('.tl-node');
+  const scroller = document.getElementById('scroller');
+  const scrollTop = scroller ? scroller.scrollTop : 0;
   cachedTargets = Array.from(nodes).map(node => {
     const r = node.getBoundingClientRect();
     return {
       x: r.left + r.width  / 2,
-      y: r.top  + r.height / 2,
+      y: r.top  + r.height / 2 + scrollTop,
     };
   });
 }
@@ -639,13 +641,15 @@ function renderFrame(ts) {
     return;
   }
 
-  const targets = Array.from(document.querySelectorAll('.tl-node')).map(node => {
-    const r = node.getBoundingClientRect();
-    return {
-      x: r.left + r.width  / 2,
-      y: r.top  + r.height / 2,
-    };
-  });
+  if (!cachedTargets) {
+    cacheTimelineTargets();
+  }
+  const scroller = document.getElementById('scroller');
+  const scrollTop = scroller ? scroller.scrollTop : 0;
+  const targets = cachedTargets.map(t => ({
+    x: t.x,
+    y: t.y - scrollTop,
+  }));
 
   const ease = easeInOutCubic(morphProgress);
 
@@ -715,35 +719,40 @@ function renderFrame(ts) {
 (function initScrollDetection() {
   const scroller   = document.getElementById('scroller');
   const scrollHint = document.getElementById('scrollHint');
+  let lastPanel = -1;
 
   scroller.addEventListener('scroll', () => {
     const H = scroller.clientHeight || window.innerHeight;
     const scrollTop = scroller.scrollTop;
     const panel = Math.round(scrollTop / H);
 
-    // Toggle panel animations based on current active panel
-    if (panel === 1) {
-      ackAnim.show();
-    } else {
-      ackAnim.hide();
-    }
+    if (panel !== lastPanel) {
+      lastPanel = panel;
 
-    if (panel === 2) {
-      journeyAnim.show();
-    } else {
-      journeyAnim.hide();
-    }
+      // Toggle panel animations based on current active panel
+      if (panel === 1) {
+        ackAnim.show();
+      } else {
+        ackAnim.hide();
+      }
 
-    if (panel === 4) {
-      conclusionAnim.show();
-    } else {
-      conclusionAnim.hide();
-    }
+      if (panel === 2) {
+        journeyAnim.show();
+      } else {
+        journeyAnim.hide();
+      }
 
-    if (panel === 0) {
-      scrollHint.style.opacity = '1';
-    } else {
-      scrollHint.style.opacity = '0';
+      if (panel === 4) {
+        conclusionAnim.show();
+      } else {
+        conclusionAnim.hide();
+      }
+
+      if (panel === 0) {
+        scrollHint.style.opacity = '1';
+      } else {
+        scrollHint.style.opacity = '0';
+      }
     }
 
     // Scroll-linked morph transition between Panel 2 (Journey) and Panel 3 (TOC)
@@ -1357,3 +1366,53 @@ function renderZopaDiagram(container) {
 }
 
 requestAnimationFrame(renderFrame);
+
+/* ════════════════════════════════════════════
+   CIRCULAR CONCENTRIC NAVIGATION MENU
+   ════════════════════════════════════════════ */
+(function initCircularMenu() {
+  const overlay = document.getElementById('circularMenuOverlay');
+  const openBtn = document.getElementById('navMenuBtn');
+  const closeBtn = document.getElementById('menuCloseBtn');
+  const rings = document.querySelectorAll('.menu-ring');
+  const scroller = document.getElementById('scroller');
+
+  if (!overlay || !openBtn || !closeBtn) return;
+
+  function openMenu() {
+    overlay.classList.add('active');
+  }
+
+  function closeMenu() {
+    overlay.classList.remove('active');
+  }
+
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeMenu();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closeMenu();
+    }
+  });
+
+  rings.forEach(ring => {
+    ring.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panelIndex = parseInt(ring.dataset.panel, 10);
+      if (isNaN(panelIndex)) return;
+
+      closeMenu();
+
+      const H = scroller.clientHeight || window.innerHeight;
+      scroller.scrollTo({
+        top: panelIndex * H,
+        behavior: 'smooth'
+      });
+    });
+  });
+})();
+
