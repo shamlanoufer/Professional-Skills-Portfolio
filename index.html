@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Skills Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <span class="topbar-logo">Professional Skills Portfolio</span>
+    <div class="topbar-right">
+      <button class="mode-toggle" id="modeBtn" aria-label="Toggle light/dark mode">
+        <div class="toggle-track">
+          <div class="toggle-thumb"></div>
+        </div>
+        <span id="modeLabel">Light mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Scroll container (two snap panels) -->
+  <div class="scroller" id="scroller">
+
+    <!-- ── PANEL 1 : Hero + Orbit ── -->
+    <section class="panel hero-panel" id="heroPanel">
+      <div class="grid-bg"></div>
+
+      <!-- Orbit system -->
+      <div class="orbit-system" id="orbitSystem">
+        <div class="orb orb-c"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-a"></div>
+        <!-- orbit dot elements injected by JS -->
+        <div class="orbit-dot-wrap" id="orbitDotWrap"></div>
+      </div>
+
+      <!-- Hero text -->
+      <div class="hero-center">
+        <p class="eyebrow">Professional Skills Portfolio</p>
+        <h1 class="headline">Your <em>Journey</em><br>into the Workplace</h1>
+        <p class="sub">Shamla Noufer &middot; SA24610780</p>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" id="scrollHint">
+        <span>Scroll to explore</span>
+        <i class="ti ti-chevron-down" aria-hidden="true"></i>
+      </div>
+    </section>
+
+    <!-- ── PANEL 2 : Acknowledgement ── -->
+    <section class="panel prose-panel" id="ackPanel">
+      <canvas class="prose-canvas" id="ackCanvas"></canvas>
+      <div class="prose-wrap" id="ackWrap">
+        <div class="prose-inner">
+          <p class="eyebrow">With Gratitude</p>
+          <h2 class="prose-heading">Acknowledgement</h2>
+          <div class="prose-body">
+            <div class="prose-body">
+  <p>
+    I would like to express my sincere gratitude to everyone who contributed to making the Professional Skills module a valuable and enriching learning experience.
+  </p>
+
+  <p>
+    My heartfelt thanks go to <em>Ms. Chathurika Koswatta</em>, the lecturer in charge of the module, for her guidance, encouragement, and continuous support throughout the semester. Her dedication and commitment played a key role in helping us gain meaningful knowledge and practical insights from each session.
+  </p>
+
+  <p>
+    I would also like to thank all the lecturers, resource persons, and guest speakers who shared their expertise and industry experiences. Their sessions provided valuable perspectives on professional development, career readiness, communication, leadership, emotional intelligence, research, and workplace practices, broadening my understanding of the skills required for success in a professional environment.
+  </p>
+
+  <p>
+    I am equally grateful to my peers for their cooperation, teamwork, and contributions to a positive learning environment. The discussions, collaborative activities, and shared experiences enhanced both my learning and personal growth.
+  </p>
+
+  <p>
+    Finally, I appreciate the opportunity to participate in this module. The knowledge, skills, and experiences I gained have strengthened my professional competencies and better prepared me for future academic, personal, and career opportunities.
+  </p>
+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PANEL 3 : My Professional Learning Journey ── -->
+    <section class="panel prose-panel" id="journeyPanel">
+      <canvas class="prose-canvas" id="journeyCanvas"></canvas>
+      <div class="prose-wrap" id="journeyWrap">
+        <div class="prose-inner">
+          <p class="eyebrow">Personal Reflection</p>
+          <h2 class="prose-heading">My Professional<br><em>Learning Journey</em></h2>
+          <div class="prose-body">
+            <p>I am <em>Shamla Noufer</em>, a second year undergraduate at SLIIT Kandy Uni with a strong interest in building a successful career in the IT industry. Before undertaking the Professional Skills module, I primarily associated career success with academic performance and technical expertise. However, this learning experience broadened my perspective and helped me understand that professional success also depends on a wide range of employability skills, including effective communication, leadership, emotional intelligence, networking, research capabilities, teamwork, and career readiness.</p>
+            <p>Throughout the semester, I had the opportunity to participate in a series of engaging sessions conducted by experienced lecturers and industry professionals. These sessions covered diverse topics such as portfolio development, professional networking through LinkedIn, CV writing, emotional intelligence, research skills, meeting management, negotiation techniques, and team leadership. Each session provided practical insights and valuable lessons that enhanced my understanding of workplace expectations and professional growth.</p>
+            <p>This portfolio serves as a reflection of my learning journey throughout the module. It highlights the knowledge I gained, the skills I developed, and the ways in which these experiences have shaped my personal and professional development. More than an academic requirement, this portfolio represents my commitment to lifelong learning and my preparation for future opportunities, including internships and a successful career in the IT industry.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PANEL 4 : Morph + TOC ── -->
+    <section class="panel toc-panel" id="tocPanel">
+      <!-- TOC content — revealed after morph lands -->
+      <div class="toc-wrap" id="tocWrap">
+        <div class="timeline" id="timeline">
+          <!-- Session rows injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PANEL 5 : Conclusion ── -->
+    <section class="panel prose-panel" id="conclusionPanel">
+      <canvas class="prose-canvas" id="conclusionCanvas"></canvas>
+      <div class="prose-wrap" id="conclusionWrap">
+        <div class="prose-inner">
+          <p class="eyebrow">Summary & Outlook</p>
+          <h2 class="prose-heading">Conclusion</h2>
+          <div class="prose-body">
+            <p>This portfolio documents my learning journey throughout the Professional Skills module, covering key areas such as portfolio development, professional communication, teamwork, emotional intelligence, research skills, CV writing, meeting management, negotiation, and leadership. Each session contributed to building a stronger understanding of both academic concepts and their real-world application in professional environments.</p>
+            <p>Across the weeks, I learned that professional skills are not isolated topics but interconnected abilities that shape how individuals work, communicate, and grow within teams and organizations. Skills such as negotiation, teamwork, and emotional intelligence highlighted the importance of collaboration, while CV writing, research, and portfolio development emphasized the need for clear self-presentation and critical thinking.</p>
+            <p>The practical activities, including role-plays, group tasks, and reflective exercises, helped me connect theory with experience. These activities improved my confidence in applying concepts such as <em>BATNA</em>, Tuckman's stages of team development, and effective communication strategies in realistic situations.</p>
+            <p>Overall, this module has helped me develop both self-awareness and professional readiness. I now understand the importance of continuous improvement, reflective practice, and adaptability in achieving long-term career success. I will continue to apply these skills in my academic work, group projects, and future career opportunities, ensuring that I grow not only as a student but also as a responsible and effective professional.</p>
+          </div>
+
+          <!-- Modern Luxury Footer -->
+          <footer class="portfolio-footer">
+            <div class="footer-divider"></div>
+            <div class="footer-grid">
+              <div class="footer-col">
+                <span class="footer-label">Student</span>
+                <span class="footer-val">Shamla Noufer</span>
+              </div>
+              <div class="footer-col">
+                <span class="footer-label">Student ID</span>
+                <span class="footer-val">SA24610780</span>
+              </div>
+              <div class="footer-col">
+                <span class="footer-label">Academic Year</span>
+                <span class="footer-val">Year 2 Semester 2</span>
+              </div>
+              <div class="footer-col">
+                <span class="footer-label">Institution</span>
+                <span class="footer-val">SLIIT Kandy Uni</span>
+              </div>
+            </div>
+            <div class="footer-note">
+              Professional Skills Portfolio &copy; 2026. All rights reserved.
+            </div>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /scroller -->
+
+  <!-- Canvas for the morphing dot animation (fixed viewport-relative overlay) -->
+  <canvas id="morphCanvas"></canvas>
+
+  <!-- Reflection Detail Modal (Luxury Glassmorphism Overlay) -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card" id="modalCard">
+      <button class="modal-close" id="modalClose" aria-label="Close reflection details">
+        <i class="ti ti-x"></i>
+      </button>
+      <div class="modal-content">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
