@@ -1416,3 +1416,37 @@ requestAnimationFrame(renderFrame);
   });
 })();
 
+
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   LEARNING JOURNEY TIMELINE â€” Accordion toggle
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+(function initLJTimeline() {
+  const nodes = document.querySelectorAll('.lj-node');
+
+  nodes.forEach(function(node) {
+    const btn = node.querySelector('.lj-node-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function() {
+      const isActive = node.classList.contains('active');
+
+      // Close all other open nodes
+      nodes.forEach(function(n) {
+        n.classList.remove('active');
+        var b = n.querySelector('.lj-node-btn');
+        if (b) b.setAttribute('aria-expanded', 'false');
+        var o = n.querySelector('.lj-outcomes');
+        if (o) o.setAttribute('aria-hidden', 'true');
+      });
+
+      // Toggle clicked node
+      if (!isActive) {
+        node.classList.add('active');
+        btn.setAttribute('aria-expanded', 'true');
+        var outcomes = node.querySelector('.lj-outcomes');
+        if (outcomes) outcomes.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+})();

@@ -2329,3 +2329,207 @@ body.light .menu-ring:hover {
 
 
 
+
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   LEARNING JOURNEY TIMELINE â€” Orbit-Line Accordion
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+.lj-title { margin-top: 2.8rem !important; }
+
+.lj-subtitle {
+  font-size: 13px;
+  opacity: 0.55;
+  margin-bottom: 1.6rem;
+  transition: color 0.45s ease;
+}
+
+/* Container */
+.lj-orbit-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 2.4rem;
+  padding-left: 1px;
+}
+
+/* Continuous vertical orbit line behind all nodes */
+.lj-orbit-wrap::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  bottom: 18px;
+  width: 1.5px;
+  background: linear-gradient(to bottom, transparent 0%, var(--em-color) 8%, var(--em-color) 92%, transparent 100%);
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Each row */
+.lj-node {
+  position: relative;
+  z-index: 1;
+}
+
+/* Clickable button row */
+.lj-node-btn {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  position: relative;
+}
+
+/* Orbit dot */
+.lj-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--em-color);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.lj-node-btn:hover .lj-dot,
+.lj-node.active .lj-dot {
+  background: var(--em-color);
+  box-shadow: 0 0 0 5px rgba(99,91,215,0.18), 0 0 18px rgba(99,91,215,0.30);
+}
+
+/* Session number */
+.lj-num {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--em-color);
+  transition: color 0.35s ease;
+}
+
+.lj-node-btn:hover .lj-num,
+.lj-node.active .lj-num { color: #fff; }
+
+/* Horizontal connecting line between dot and label */
+.lj-line {
+  display: block;
+  width: 14px;
+  height: 1.5px;
+  background: var(--em-color);
+  opacity: 0.35;
+  flex-shrink: 0;
+  transition: opacity 0.35s ease, width 0.35s ease;
+}
+
+.lj-node-btn:hover .lj-line,
+.lj-node.active .lj-line { opacity: 0.8; width: 18px; }
+
+/* Session label */
+.lj-label {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 0 10px;
+  transition: color 0.35s ease;
+  letter-spacing: 0.01em;
+}
+
+.lj-node-btn:hover .lj-label,
+.lj-node.active .lj-label { color: var(--em-color); }
+
+/* Chevron */
+.lj-chevron {
+  color: var(--em-color);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+}
+
+.lj-node.active .lj-chevron { transform: rotate(180deg); opacity: 1; }
+
+/* Outcomes panel */
+.lj-outcomes {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease, padding 0.35s ease;
+  padding: 0 0 0 50px;
+}
+
+.lj-node.active .lj-outcomes {
+  max-height: 220px;
+  opacity: 1;
+  padding-bottom: 14px;
+}
+
+.lj-outcomes ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lj-outcomes ul li {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  opacity: 0.78;
+  padding-left: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.lj-outcomes ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--em-color);
+  opacity: 0.65;
+}
+
+/* Divider between nodes */
+.lj-node + .lj-node {
+  border-top: 1px solid rgba(99,91,215,0.08);
+}
+
+/* Hover glow behind row */
+.lj-node-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0 -8px 0 -8px;
+  border-radius: 10px;
+  background: rgba(99,91,215,0);
+  transition: background 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.lj-node-btn:hover::after { background: rgba(99,91,215,0.05); }
+
+/* Light mode */
+body.light .lj-orbit-wrap::before { opacity: 0.2; }
+body.light .lj-node + .lj-node { border-top-color: rgba(83,74,183,0.1); }
+body.light .lj-node-btn:hover::after { background: rgba(83,74,183,0.05); }
